@@ -35,4 +35,4 @@ client.on('ready', () => {
 });
 
 // Bot Token
-client.login(''); 
+client.login('token'); 
