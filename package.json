@@ -1,0 +1,15 @@
+{
+    "name": "PteroActivity",
+    "version": "1.2.0",
+    "description": "bat bot",
+    "author": "NightSky",
+    "main": "index.js",
+    "dependencies": {
+      "discord.js": "^13.6.0",
+      "mysql": "^2.18.1"
+    },
+    "devDependencies": {
+      "typescript": "^4.5.4"
+    }
+  }
+  
