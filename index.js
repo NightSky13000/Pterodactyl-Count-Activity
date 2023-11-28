@@ -9,8 +9,6 @@ const API_KEY = config.apikey;
 
 client.on('ready', async () => {
   console.log(`${client.user.tag}! Bot Online `);
-  console.log(`Created by NightSky `);
-  console.log(`https://github.com/NightSky13000`);
 
   try {
     const response = await axios.get(`${URL_PANEL}/api/application/servers`, {
