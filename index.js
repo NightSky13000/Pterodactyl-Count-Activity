@@ -4,8 +4,8 @@ const config = require('./config.json');
 
 const client = new Discord.Client({ intents: ['GUILDS', 'GUILD_MESSAGES'] });
 
-const URL_PANEL = config.url
-const API_KEY = config.api;
+const URL_PANEL = config.panel_url
+const API_KEY = config.apikey;
 
 client.on('ready', async () => {
   console.log(`${client.user.tag}! Bot Online `);
