@@ -5,5 +5,4 @@
 
 ## 📄 License
 
-- Powered by: [AL STORE](https://github.com/AL-STORE)
 - Code: [MIT](./LICENSE)
