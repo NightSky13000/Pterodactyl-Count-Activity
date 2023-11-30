@@ -3,7 +3,7 @@
   "version": "1.0",
   "description": "Bot Untuk Menampilkan Total Server Sebagai Activity",
   "author": "NightSky",
-    "license": "MIT",
+  "license": "MIT",
   "main": "index.js",
   "dependencies": {
     "discord.js": "^13.6.0",
