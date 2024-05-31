@@ -1,61 +1,47 @@
-const Discord = require('discord.js');
+const { Client, GatewayIntentBits, ActivityType } = require('discord.js');
 const axios = require('axios');
 const config = require('./config.json');
 
-const client = new Discord.Client({ intents: ['GUILDS', 'GUILD_MESSAGES'] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 const URL_PANEL = config.panel_url;
 const API_KEY = config.apikey;
 
-let ActivityIndex = 0;
+let activityIndex = 0;
 
-async function UpdateActivity() {
+async function updateActivity() {
   try {
-    const [ServersResponse, NodesResponse, UsersResponse] = await Promise.all([
-      axios.get(`${URL_PANEL}/api/application/servers`, {
-        headers: {
-          Authorization: `Bearer ${API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-      }),
-      axios.get(`${URL_PANEL}/api/application/nodes`, {
-        headers: {
-          Authorization: `Bearer ${API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-      }),
-      axios.get(`${URL_PANEL}/api/application/users`, {
-        headers: {
-          Authorization: `Bearer ${API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-      }),
-    ]);
+    const { data: serversData } = await axios.get(`${URL_PANEL}/api/application/servers`, {
+      headers: { Authorization: `Bearer ${API_KEY}` }
+    });
 
-    const ServerCount = ServersResponse.data.meta.pagination.total;
-    const NodeCount = NodesResponse.data.meta.pagination.total;
-    const UserCount = UsersResponse.data.meta.pagination.total;
+    const { data: nodesData } = await axios.get(`${URL_PANEL}/api/application/nodes`, {
+      headers: { Authorization: `Bearer ${API_KEY}` }
+    });
 
-    // Activity List
+    const { data: usersData } = await axios.get(`${URL_PANEL}/api/application/users`, {
+      headers: { Authorization: `Bearer ${API_KEY}` }
+    });
+
     const activities = [
-      { type: 'WATCHING', text: `${ServerCount} Servers` },
-      { type: 'WATCHING', text: `${NodeCount} Nodes` },
-      { type: 'WATCHING', text: `${UserCount} Users` },
+      { type: ActivityType.Watching, name: `${serversData.meta.pagination.total} Servers` },
+      { type: ActivityType.Watching, name: `${nodesData.meta.pagination.total} Nodes` },
+      { type: ActivityType.Watching, name: `${usersData.meta.pagination.total} Users` }
     ];
 
-    client.user.setActivity(activities[ActivityIndex].text, { type: activities[ActivityIndex].type });
+    client.user.setActivity(activities[activityIndex].name, { type: activities[activityIndex].type });
     client.user.setStatus('dnd');
 
-    ActivityIndex = (ActivityIndex + 1) % activities.length;
+    activityIndex = (activityIndex + 1) % activities.length;
   } catch (error) {
     console.error('Error fetching data from Pterodactyl API:', error.message);
   }
 }
 
-client.on('ready', () => {
-  console.log(`${client.user.tag}! Bot Online `);
-  UpdateActivity();
-  setInterval(UpdateActivity, 30 * 1000);
+client.once('ready', () => {
+  console.log(`${client.user.tag} is online!`);
+  updateActivity();
+  setInterval(updateActivity, 30000);
 });
 
 client.login(config.token);
