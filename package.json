@@ -1,6 +1,6 @@
 {
   "name": "PteroActivity",
-  "version": "2.0",
+  "version": "3.0",
   "description": "Bot Untuk Menampilkan Total User, Node, dan Server Sebagai Activity",
   "author": "NightSky",
   "main": "index.js",
