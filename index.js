@@ -29,7 +29,7 @@ async function updateActivity() {
       { type: ActivityType.Watching, name: `${usersData.meta.pagination.total} Users` }
     ];
 
-    client.user.setActivity(activities[activityIndex].name, { type: activities[activityIndex].type });
+    client.user.setActivity(activities[activityIndex]);
     client.user.setStatus('dnd');
 
     activityIndex = (activityIndex + 1) % activities.length;
