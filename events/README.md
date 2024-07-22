@@ -1,0 +1,1 @@
+# For events folder
